@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>CSS Hero - A game for learning CSS</title>
+    
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-storage.js"></script>
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="images/csshero.png" />
+    <link rel="stylesheet" href="node_modules/animate.css/animate.min.css">
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans|Fredoka+One|Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/82a238a565.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+      <div>
+            <!-- Button to open the modal login form -->
+        <button onclick="document.getElementById('id01').style.display='block'">Login</button>
+
+      <!-- The Modal -->
+      <div id="id01" class="modal">
+        <span onclick="document.getElementById('id01').style.display='none'"
+      class="close" title="Close Modal">&times;</span>
+
+        <!-- Modal Content -->
+        <form class="modal-content animate" action="/action_page.php">
+          <div class="imgcontainer">
+            <img src="./images/csshero.png" alt="Logo" class="logo">
+          </div>
+
+          <div class="container">
+            <label for="email"><b>Email</b></label>
+            <input id="email" type="text" placeholder="Enter Email" name="uname" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input id="password" type="password" placeholder="Enter Password" name="psw" required>
+
+            <button type="submit" id="btn-login">Login</button>
+
+          </div>
+
+          <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+            <span class="psw">Forgot <a href="#" class="psw">password?</a></span>
+          </div>
+        </form>
+      </div>
+    </div>
+    <section id="sidebar">
+      <div class="header">
+        <div id="level-counter">
+          <span class="arrow left">
+            <span class="triangle"></span>
+          </span>
+          <span id="level-indicator">
+            <span id="labelLevel" class="translate">Level</span>
+            <span class="current">1</span>
+            <span id="labelOf" class="translate">of</span>
+            <span class="total">1</span>
+            <span class="caret">▾</span>
+          </span>
+          <span class="arrow right">
+            <span class="triangle"></span>
+          </span>
+          <div id="levelsWrapper" class="tooltip">
+            <div id="levels"></div>
+            <div id="labelReset" class="translate">Reset</div>
+          </div>
+        </div>
+      </div>
+      <p id="instructions"></p>
+      <div id="editor">
+        <div id="css">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+          <pre id="before"></pre>
+          <textarea id="code" autofocus autocapitalize="none"></textarea>
+          <pre id="after"></pre>
+        </div>
+        <button id="next" class="translate">Next</button>
+      </div>
+
+      <div class="bsa-custom"></div>
+      <div class="footer">
+        <span id="settings">
+          <span id="labelSettings" class="toggle translate">Settings</span>
+          <span class="tooltip">
+            <section>
+              <h4 id="labelLanguage" class="translate">Language</h4>
+              <select id="language">
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+              </select>
+            </section>
+            <section>
+              <h4 id="labelDifficulty" class="translate">Difficulty</h4>
+              <form id="difficulty">
+                <div>
+                  <input type="radio" name="difficulty" id="difficultyEasy" value="easy" checked>
+                  <label id="labelDifficultyEasy" for="difficultyEasy" class="translate">Beginner</label>
+                </div>
+                <div>
+                  <input type="radio" name="difficulty" id="difficultyMedium" value="medium">
+                  <label id="labelDifficultyMedium" for="difficultyMedium" class="translate">Intermediate - No Directions</label>
+                </div>
+                <div>
+                  <input type="radio" name="difficulty" id="difficultyHard" value="hard">
+                  <label id="labelDifficultyHard" for="difficultyHard" class="translate">Expert - No Directions &amp; Random Levels</label>
+                </div>
+              </form>
+            </section>
+            <section>
+              <h4 id="labelColorblind" class="translate">Colorblind Mode</h4>
+              <form id="colorblind">
+                <div>
+                  <div>
+                    <input type="radio" name="colorblind" id="colorblindOff" value="false" checked>
+                    <label id="labelColorblindOff" for="colorblindOff" class="translate">Off</label>
+                  </div>
+                  <div>
+                    <input type="radio" name="colorblind" id="colorblindOn" value="true">
+                    <label id="labelColorblindOn" for="colorblindOn" class="translate">On</label>
+                  </div>
+              </form>
+              <div>  
+                <button type="button" value="PLAY" onclick="play()" id="music" style="background-color: transparent;">
+                  <div style="font-size: 15px;"><i class="fas fa-music"></i></div>
+                </button>
+                <audio id="audio" src="./Audio/Music.mp3"></audio>
+              </div>
+            </section>
+          </span>
+        </span>
+      </div>
+
+    </section>
+    <section id="view">
+      <div id="board">
+        <div id="sky">
+        </div>
+        <div id="background">
+        </div>
+      </div>
+    </section>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/docs.js"></script>
+    <script src="js/messages.js"></script>
+    <script src="js/game.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-23019901-13', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script src="./j/index.js"></script>
+    <script>
+      firebase.auth().onAuthChanged(function(user){
+        if (user) {
+          window.location.href = "index.html";
+        }
+      });
+    </script> 
+  </body>
+</html>
